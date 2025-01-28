@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-regular-svg-icons';
 import { NavLink } from 'react-router-dom'
 import logo from '../../assets/logo/argentBankLogo.png'
+import './Header.css'
 
 export default function Header() {
   return (
@@ -17,7 +18,7 @@ export default function Header() {
     </NavLink>
     <div>
       <NavLink className="main-nav-item" to="/sign-in">
-        <FontAwesomeIcon icon={faUserCircle} />
+        <FontAwesomeIcon icon={faUserCircle} className='icon-circle'/>
         Sign In
       </NavLink>
     </div>
