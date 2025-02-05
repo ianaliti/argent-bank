@@ -17,8 +17,8 @@ export const userLogin = createAsyncThunk(
                 { email, password },
                 config
             )
-                localStorage.setItem('userToken', data.userToken)
-                return data;
+            localStorage.setItem('userToken', data.body.token)
+            return data;
         } catch (err) {
             if (err.response && err.response.data.message) {
                 return rejectWithValue(err.response.data.message)
@@ -30,15 +30,28 @@ export const userLogin = createAsyncThunk(
 );
 
 export const fetchUserProfile = createAsyncThunk(
-    "/user/profile",
-async (_, { rejectWithValue }) => {
-    try {
-        const userToken = localStorage.getItem("userToken");
-        const { data } = await axios.get(
-            `${backendURL}/user/profile`, {}, { headers: { Authorization: `Bearer ${userToken}`} }
-        );
-        return data;
-    } catch (err) {
-        return rejectWithValue(err.response.data)
+    '/user/profile',
+    async (_, { rejectWithValue }) => {
+        try {
+            const userToken = localStorage.getItem('userToken');
+
+            if (!userToken) {
+                return rejectWithValue("No token found, please log in again")
+            }
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${userToken}`,
+                    'Content-Type': 'application/json'
+                },
+            }
+            const { data } = await axios.post(
+                `${backendURL}/user/profile`, {}, config
+            )
+            console.log("API Response:", data);
+            return data;
+        } catch (err) {
+            return rejectWithValue(err.response?.data || "Failed to fetch profile");
+        }
     }
-});
+);
+

@@ -9,7 +9,7 @@ import { faEarthAmerica } from '@fortawesome/free-solid-svg-icons';
 import './Login.css'
 
 
-export default function SignIn() {
+export default function Login() {
   const { loading, error, userToken } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
