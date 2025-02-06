@@ -23,12 +23,14 @@ export default function Login() {
 
   const onSubmitForm = async (data) => {
       try {
-          await dispatch(userLogin({
+          const result = await dispatch(userLogin({
               email: data.email,
               password: data.password
           })).unwrap();
 
-          navigate('/user/profile')
+          if(result) {
+            navigate('/user/profile')
+          }
 
       } catch (err) {
           console.error('Login failed:', err)

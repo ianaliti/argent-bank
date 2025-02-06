@@ -3,8 +3,9 @@ import React, { useEffect } from 'react'
 import './Profile.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { logout } from '../../redux/authSlice'
+import { logout, setTokenFromLocalStorage } from '../../redux/authSlice'
 import { fetchUserProfile } from '../../redux/authAction'
+import Account from '../../components/accounts/Account'
 
 export default function Profile() {
 
@@ -13,8 +14,14 @@ export default function Profile() {
   const { loading, userInfo, userToken } = useSelector((state) => state.user)
 
   useEffect(() => {
-    if(!userToken) {
-      navigate('/user/login')
+    if (!userToken) {
+      const token = localStorage.getItem('userToken')
+
+      if (token) {
+        dispatch(setTokenFromLocalStorage(token));
+      }
+    } if (!userToken) {
+      navigate('/user/login');
     } else {
       dispatch(fetchUserProfile())
     }
@@ -25,15 +32,18 @@ export default function Profile() {
     navigate('/user/login')
   }
 
-  console.log(userInfo?.body?.firstName) 
+  console.log(userInfo?.body?.firstName)
 
   return (
     <main className="main bg-dark">
-    <div className="header">
-    <h1>Welcome back<br />{loading ? 'Loading...' : userInfo?.body?.firstName || 'User'}!</h1>
-      <button className="edit-button">Edit Name</button>
-      <button className="edit-button" onClick={handlelLogout}>Logout</button>
-    </div>
-  </main>
+      <div className="header">
+        <h1>Welcome back<br />{loading ? 'Loading...' : userInfo?.body?.firstName || 'User'}!</h1>
+        <button className="edit-button">Edit Name</button>
+        <button className="edit-button" onClick={handlelLogout}>Logout</button>
+      </div>
+      <div>
+        <Account />
+      </div>
+    </main>
   )
 }
