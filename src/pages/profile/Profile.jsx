@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect } from 'react'
 import './Profile.css'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { logout, setTokenFromLocalStorage } from '../../redux/authSlice'
 import { fetchUserProfile } from '../../redux/authAction'
 import Account from '../../components/accounts/Account'
+
 
 export default function Profile() {
 

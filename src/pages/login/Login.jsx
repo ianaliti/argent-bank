@@ -5,7 +5,6 @@ import { faUserCircle } from '@fortawesome/free-regular-svg-icons'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin } from '../../redux/authAction';
-import { faEarthAmerica } from '@fortawesome/free-solid-svg-icons';
 import './Login.css'
 
 

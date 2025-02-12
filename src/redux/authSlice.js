@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { userLogin, fetchUserProfile } from "./authAction"
+import { userLogin, fetchUserProfile, registerUser, updateUserProfile } from "./authAction"
 
 const userToken = localStorage.getItem('userToken')
   ? localStorage.getItem('userToken')
@@ -27,12 +27,12 @@ const authSlice = createSlice({
     },
     setTokenFromLocalStorage: (state, action) => {
       state.userToken = action.payload;
-  },
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserProfile.fulfilled, (state, { payload }) => {
-        state.userInfo = payload; 
+        state.userInfo = payload;
       })
       .addCase(userLogin.pending, (state) => {
         state.loading = true;
@@ -41,11 +41,34 @@ const authSlice = createSlice({
       .addCase(userLogin.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.userInfo = payload;
-        state.userToken = payload.userToken;
+        state.userToken = payload.token || payload.data?.token;
       })
       .addCase(userLogin.rejected, (state, { payload }) => {
         state.loading = false;
         state.error = payload;
+      })
+
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(registerUser.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.success = true;
+        state.userInfo = payload.user;
+        state.userToken = payload.token || payload.data?.token;
+
+        if(state.userToken) {
+          localStorage.getItem('userToken', state.userToken)
+        }
+      })
+      .addCase(registerUser.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      })
+
+      .addCase(updateUserProfile.fulfilled, (state, { payload }) => {
+        state.userInfo = payload;
+        state.success = true;
       });
   }
 })
