@@ -22,9 +22,11 @@
   padding: 5px 20px;
   width: 100%;
 
-  a {
+  a, button {
     font-weight: bold;
     color: #2c3e50;
+    border: none;
+    background-color: transparent;
 
     &:active {
       color: #42b983;
