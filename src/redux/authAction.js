@@ -74,7 +74,7 @@ export const fetchUserProfile = createAsyncThunk(
 
 export const updateUserProfile = createAsyncThunk(
     "user/profile",
-    async ({ firstName, lastName, email }, { rejectWithValue }) => {
+    async ({ firstName, lastName }, { rejectWithValue }) => {
         try {
             const userToken = localStorage.getItem("userToken");
             if (!userToken) {
@@ -88,7 +88,7 @@ export const updateUserProfile = createAsyncThunk(
                 },
             };
 
-            const { data } = await axios.put(`${backendURL}/user/profile`, { firstName, lastName, email }, config);
+            const { data } = await axios.put(`${backendURL}/user/profile`, { firstName, lastName }, config);
             return data.user;
         } catch (error) {
             return rejectWithValue(error.response?.data || "Update failed");

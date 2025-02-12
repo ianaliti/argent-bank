@@ -30,8 +30,8 @@ export default function Profile() {
 
   console.log(userInfo?.body?.firstName)
 
-  return (
-    <main className="main bg-dark">
+  return ( 
+    <main className="main bg-dark profile">
       <div className="header">
         <h1>Welcome back<br />{loading ? 'Loading...' : userInfo?.body?.firstName || 'User'}!</h1>
         <Link className="edit-button" to='/user/updateProfile' >Edit Name</Link>
