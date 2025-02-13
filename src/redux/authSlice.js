@@ -41,7 +41,7 @@ const authSlice = createSlice({
       .addCase(userLogin.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.userInfo = payload;
-        state.userToken = payload.token || payload.data?.token;
+        state.userToken = payload.body.token;
       })
       .addCase(userLogin.rejected, (state, { payload }) => {
         state.loading = false;
@@ -54,11 +54,11 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.success = true;
-        state.userInfo = payload.user;
-        state.userToken = payload.token || payload.data?.token;
+        state.userInfo = payload.body;
+        state.userToken = payload.body.token;
 
-        if(state.userToken) {
-          localStorage.getItem('userToken', state.userToken)
+        if (state.userToken) {
+          localStorage.setItem('userToken', payload.body.token); // ✅ Fix: use payload.body.token
         }
       })
       .addCase(registerUser.rejected, (state, { payload }) => {

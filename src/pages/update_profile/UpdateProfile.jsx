@@ -21,7 +21,6 @@ export default function UpdateProfile() {
         if (userInfo) {
             setValue("firstName", userInfo?.body?.firstName || "");
             setValue("lastName", userInfo?.body?.lastName || "");
-            setValue("email", userInfo?.body?.email || "");
         }
     }, [userInfo, setValue]);
 

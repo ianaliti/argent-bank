@@ -4,8 +4,8 @@ import axios from "axios"
 const backendURL = 'http://localhost:3001/api/v1';
 
 export const registerUser = createAsyncThunk(
-    "auth/register",
-    async ({ firstName, email, password }, { rejectWithValue }) => {
+    "auth/signup",
+    async ({ firstName,lastName, email, password }, { rejectWithValue }) => {
         try {
             const config = {
                 headers: {
@@ -13,8 +13,8 @@ export const registerUser = createAsyncThunk(
                 },
             };
             const { data } = await axios.post(
-                `${backendURL}/user/register`,
-                { firstName, email, password },
+                `${backendURL}/user/signup`,
+                { firstName, lastName, email, password },
                 config
             );
             return data;
@@ -40,7 +40,7 @@ export const userLogin = createAsyncThunk(
             )
             localStorage.setItem('userToken', data.body.token)
             return data;
-        } catch (err) {
+        } catch (error) {
             return rejectWithValue(error.response?.data?.message || error.message);
         }
     }
@@ -64,10 +64,9 @@ export const fetchUserProfile = createAsyncThunk(
             const { data } = await axios.post(
                 `${backendURL}/user/profile`, {}, config
             )
-            console.log("API Response:", data);
             return data;
-        } catch (err) {
-            return rejectWithValue(err.response?.data || "Failed to fetch profile");
+        } catch (error) {
+            return rejectWithValue(error.response?.data || "Failed to fetch profile");
         }
     }
 );

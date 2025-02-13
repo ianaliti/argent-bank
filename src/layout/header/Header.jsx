@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserCircle } from '@fortawesome/free-regular-svg-icons';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
@@ -15,14 +15,15 @@ export default function Header() {
 
   const handlelLogout = () => {
     dispatch(logout())
-    navigate('/user/login')
+    setTimeout(() => {
+      navigate('/')
+    })
   }
 
   return (
     <nav className="main-nav">
       <NavLink className="main-nav-logo" to="/" >
         <img
-          className="main-nav-logo-image"
           src={logo}
           alt="Argent Bank Logo"
         />
