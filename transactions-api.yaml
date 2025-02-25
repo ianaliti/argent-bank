@@ -1,0 +1,204 @@
+swagger: '2.0'
+info:
+  title: Bank Argent Transactions API Documentation
+  description: API pour la gestion des transactions des utilisateurs
+  version: '1.0.0'
+  termsOfService: 'http://swagger.io/terms/'
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+paths:
+  # Récupérer toutes les transactions pour un mois donné
+  /transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Récupérer les transactions du mois en cours
+      description: API pour obtenir toutes les transactions pour le mois en cours pour l'utilisateur authentifié.
+      parameters:
+        - in: query
+          name: month
+          type: string
+          required: true
+          description: Mois au format YYYY-MM pour récupérer les transactions de ce mois.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Liste des transactions du mois en cours récupérée avec succès
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Transaction'
+        '401':
+          description: Non autorisé - Jeton JWT invalide ou manquant
+        '500':
+          description: Erreur interne du serveur
+
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Ajouter une nouvelle transaction
+      description: API pour ajouter une nouvelle transaction pour l'utilisateur authentifié.
+      parameters:
+        - in: body
+          name: body
+          description: Payload pour créer une nouvelle transaction
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionCreate'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: Transaction créée avec succès
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Données invalides
+        '500':
+          description: Erreur interne du serveur
+
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Mettre à jour une transaction
+      description: API pour mettre à jour une transaction existante pour l'utilisateur authentifié.
+      parameters:
+        - in: body
+          name: body
+          description: Payload pour mettre à jour une transaction
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionUpdate'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Transaction mise à jour avec succès
+          schema:
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Données invalides
+        '500':
+          description: Erreur interne du serveur
+
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Supprimer une transaction
+      description: API pour supprimer une transaction existante pour l'utilisateur authentifié.
+      parameters:
+        - in: body
+          name: body
+          description: Payload pour supprimer une transaction
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionDelete'
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: Transaction supprimée avec succès
+        '400':
+          description: Données invalides
+        '500':
+          description: Erreur interne du serveur
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+
+definitions:
+  # Définition de la transaction
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID de la transaction
+      date:
+        type: string
+        format: date-time
+        description: Date de la transaction
+      amount:
+        type: number
+        format: float
+        description: Montant de la transaction
+      type:
+        type: string
+        enum:
+          - debit
+          - credit
+        description: Type de la transaction (débit ou crédit)
+      category:
+        type: string
+        description: Catégorie de la transaction (par exemple, courses, loyer)
+      description:
+        type: string
+        description: Détails supplémentaires sur la transaction
+
+  # Création de la transaction
+  TransactionCreate:
+    type: object
+    properties:
+      amount:
+        type: number
+        format: float
+        description: Montant de la transaction
+      type:
+        type: string
+        enum:
+          - debit
+          - credit
+        description: Type de la transaction
+      category:
+        type: string
+        description: Catégorie de la transaction
+      description:
+        type: string
+        description: Description de la transaction
+
+  # Mise à jour de la transaction
+  TransactionUpdate:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID de la transaction à mettre à jour
+      amount:
+        type: number
+        format: float
+        description: Montant mis à jour
+      type:
+        type: string
+        enum:
+          - debit
+          - credit
+        description: Type mis à jour de la transaction
+      category:
+        type: string
+        description: Catégorie mise à jour
+      description:
+        type: string
+        description: Description mise à jour
+
+  # Suppression de la transaction
+  TransactionDelete:
+    type: object
+    properties:
+      id:
+        type: string
+        description: ID de la transaction à supprimer
+

@@ -27,12 +27,12 @@ export default function Profile() {
     }
   }, [userToken, dispatch, navigate])
 
-  return ( 
+  return (
     <main className="main bg-dark">
       <div className="header">
-        <h1 className='profile-title'>Welcome back<br />{loading ? 'Loading...' : (userInfo?.body?.firstName && userInfo?.body?.lastName 
-    ? `${userInfo.body.firstName} ${userInfo.body.lastName}`
-    : 'User')}!</h1>
+        <h1 className='profile-title'>Welcome back<br />{loading ? 'Loading...' : (userInfo?.body?.firstName && userInfo?.body?.lastName
+          ? `${userInfo.body.firstName} ${userInfo.body.lastName}`
+          : 'User')}!</h1>
         <Link className="edit-button" to='/user/updateProfile' >Edit Name</Link>
       </div>
       <div>
