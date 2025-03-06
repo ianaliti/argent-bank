@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchUserProfile, updateUserProfile } from '../../redux/authAction'
 import './UpdateProfile.css'
-import { useNavigate } from 'react-router-dom'
+
 
 export default function UpdateProfile() {
 
@@ -11,7 +11,6 @@ export default function UpdateProfile() {
     const { register, handleSubmit, setValue } = useForm()
 
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     useEffect(() => {
         dispatch(fetchUserProfile())
@@ -29,38 +28,30 @@ export default function UpdateProfile() {
             await dispatch(updateUserProfile({
                 firstName: data.firstName,
                 lastName: data.lastName,
-                email: data.email
             })).unwrap();
-
+            dispatch(fetchUserProfile());
             alert('Profile information updated successfully')
-            navigate('/user/profile')
 
         } catch (err) {
             console.error('Update profile information failed:', err)
         }
     }
 
-    return (
-        <div className='main bg-dark update-profile'>
-            <h2 className='update-title'>Mettre à jour le profil</h2>
-            <form className='form-update' onSubmit={handleSubmit(submitForm)}>
-                <div className='form-groupe'>
-                    <label htmlFor="firtName">First Name:</label>
-                    <input type="text"
-                        className='form-input'
-                        {...register("firstName")}
-                    />
-                </div>
-                <div className='form-groupe'>
-                    <label htmlFor="lastName">Last Name:</label>
-                    <input type="text"
-                        className='form-input'
-                        {...register("lastName")}
-                    />
-                </div>
-                <button className='update-button'>{loading ? "Changing..." : "Submit"}</button>
+    const handleCancel = () => {
+        reset();
+    };
 
-            </form>
-        </div>
+
+    return (
+        <form className='form-update' onSubmit={handleSubmit(submitForm)}>
+            <div className='input-group'>
+                <input type='text' className='form-input' {...register('firstName')} />
+                <input type='text' className='form-input' {...register('lastName')} />
+            </div>
+            <div className='button-group'>
+                <button className='save-button'>{loading ? 'Saving...' : 'Save'}</button>
+                <button className='cancel-button' type='button' onClick={handleCancel}>Cancel</button>
+            </div>
+        </form>
     )
 }

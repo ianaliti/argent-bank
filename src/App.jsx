@@ -5,6 +5,7 @@ import Profile from './pages/profile/Profile'
 import Layout from './layout/Layout'
 import Login from './pages/login/Login'
 import UpdateProfile from './pages/update_profile/UpdateProfile'
+import Transaction from './pages/transaction/Transaction'
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="user/login" element={<Login />} />
           <Route path='user/profile' element={<Profile />} />
-          <Route path='user/updateProfile' element={<UpdateProfile />} />
+          <Route path="/transactions" element={<Transaction />} />
           <Route path='*' element={<Error />} />
         </Route>
       </Routes>

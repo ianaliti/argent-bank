@@ -32,7 +32,6 @@
 
 .account-content-wrapper {
   width: 100%;
-  flex: 1;
 }
 
 .transaction-button {
@@ -52,7 +51,7 @@
     flex-direction: row;
   }
   .account-content-wrapper.cta {
-    flex: 0;
+    flex: 1;
   }
   .transaction-button {
     width: 200px;
