@@ -31,10 +31,16 @@ export default function Header() {
       </NavLink>
       <div>
         {userToken ? (
+          <>
+          <NavLink className="main-nav-item" to="/user/profile">
+            <FontAwesomeIcon icon={faUserCircle} className="icon-circle" />
+            Profile
+          </NavLink>
           <button className="main-nav-item"onClick={handlelLogout}>
             <FontAwesomeIcon icon={faSignOutAlt} className='icon-circle' />
             Logout
-          </button>) : (
+          </button>
+          </>) : (
           <NavLink className="main-nav-item" to="user/login">
             <FontAwesomeIcon icon={faUserCircle} className='icon-circle' />
             Sign In
