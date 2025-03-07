@@ -7,11 +7,19 @@ import logo from '../../assets/logo/argentBankLogo.png'
 import './Header.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/authSlice';
+import { fetchUserProfile } from '../../redux/authAction';
 
 export default function Header() {
-  const { userToken } = useSelector((state) => state.user)
+  // Add userInfo to your useSelector
+const { userToken, userInfo } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (userToken) {
+      dispatch(fetchUserProfile())
+    }
+  }, [userToken, navigate])
 
   const handlelLogout = () => {
     dispatch(logout())
@@ -34,7 +42,7 @@ export default function Header() {
           <>
           <NavLink className="main-nav-item" to="/user/profile">
             <FontAwesomeIcon icon={faUserCircle} className="icon-circle" />
-            Profile
+            {userInfo?.body?.firstName}
           </NavLink>
           <button className="main-nav-item"onClick={handlelLogout}>
             <FontAwesomeIcon icon={faSignOutAlt} className='icon-circle' />
