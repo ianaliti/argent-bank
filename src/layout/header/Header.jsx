@@ -10,7 +10,6 @@ import { logout } from '../../redux/authSlice';
 import { fetchUserProfile } from '../../redux/authAction';
 
 export default function Header() {
-  // Add userInfo to your useSelector
 const { userToken, userInfo } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -46,7 +45,7 @@ const { userToken, userInfo } = useSelector((state) => state.user)
           </NavLink>
           <button className="main-nav-item"onClick={handlelLogout}>
             <FontAwesomeIcon icon={faSignOutAlt} className='icon-circle' />
-            Logout
+            Sign out
           </button>
           </>) : (
           <NavLink className="main-nav-item" to="user/login">

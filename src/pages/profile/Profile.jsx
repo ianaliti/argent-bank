@@ -29,7 +29,7 @@ export default function Profile() {
   }, [userToken, dispatch, navigate])
 
   return (
-    <main className="main bg-dark">
+    <main className="main bg-dark profile">
       <div className="header">
         <h1 className='profile-title'>Welcome back<br />{loading ? 'Loading...' : (userInfo?.body?.firstName && userInfo?.body?.lastName
           ? `${userInfo.body.firstName} ${userInfo.body.lastName}`

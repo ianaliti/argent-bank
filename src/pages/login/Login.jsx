@@ -9,12 +9,13 @@ import './Login.css'
 
 
 export default function Login() {
-  const { loading, error, userToken } = useSelector((state) => state.user)
+  const { loading, error, userToken, success } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors } } = useForm()
   const { register: registerRegister, handleSubmit: handleSubmitRegister, formState: { errors: errorsRegister }, reset } = useForm();
   const [showRegister, setShowRegister] = useState(false);
+  const [registrationError, setRegistrationError] = useState(null);
 
   useEffect(() => {
     if (userToken) {
@@ -29,7 +30,7 @@ export default function Login() {
         password: data.password
       })).unwrap();
 
-      if (result) {
+      if (result && result.body && result.body.token) {
         navigate('/user/profile')
       }
 
@@ -39,6 +40,8 @@ export default function Login() {
   };
 
   const onSubmitRegister = async (data) => {
+    setRegistrationError(null);
+
     try {
       const result = await dispatch(registerUser({
         firstName: data.firstName,
@@ -47,22 +50,25 @@ export default function Login() {
         password: data.password
       })).unwrap();
 
-      if (result.body) {
+      if (result && result.body && result.body.token) {
+        reset();
+        setShowRegister(false);
+      }
+      else if (result.body) {
         const loginResult = await dispatch(userLogin({
           email: data.email,
           password: data.password
         })).unwrap();
-
-        if (loginResult.body.token) {
+        if (loginResult && loginResult.body && loginResult.body.token) {
+          reset();
+          setShowRegister(false);
           navigate('/user/profile');
         }
       }
     } catch (err) {
-      console.error('Login failed:', err)
+      console.error('Login failed:', err);
+      setRegistrationError(err.toString());
     }
-
-    reset();
-    setShowRegister(false);
   };
 
   return (
@@ -146,7 +152,7 @@ export default function Login() {
                 />
                 {errorsRegister.password && <span className="error">{errorsRegister.password.message}</span>}
               </div>
-              <button type="submit" className="sign-in-button">Register</button>
+              <button type="submit" className="sign-in-button" disabled={loading}>{loading ? 'Registering...' : 'Register'}</button>
               <button type="button" className="close-modal" onClick={() => setShowRegister(false)}>Close</button>
             </form>
           </div>

@@ -1,21 +1,28 @@
-  .edit-button {
-    border-color: #00bc77;
-    background-color: #00bc77;
-    color: #fff;
-    font-weight: bold;
-    padding: 10px;
-  }
-  
-  .header {
-    color: #fff;
-    margin-bottom: 2rem;
+  .profile {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 60px;
 
-    .profile-title {
-      margin: 0;
-      padding: 22px;
+    .edit-button {
+      border-color: #00bc77;
+      background-color: #00bc77;
+      color: #fff;
+      font-weight: bold;
+      padding: 10px;
     }
-  }
-
-  .account-container {
-    margin-bottom: 40px;
+    
+    .header {
+      color: #fff;
+      margin-bottom: 2rem;
+  
+      .profile-title {
+        margin: 0;
+        padding: 22px;
+      }
+    }
+  
+    .account-container {
+      margin-bottom: 40px;
+    }
   }
