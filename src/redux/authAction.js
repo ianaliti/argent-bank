@@ -4,19 +4,22 @@ import axios from "axios"
 const backendURL = 'http://localhost:3001/api/v1';
 
 export const registerUser = createAsyncThunk(
-    "auth/signup",
-    async ({ firstName,lastName, email, password }, { rejectWithValue }) => {
+    "auth/signup", //action 
+    async ({ firstName, lastName, email, password }, { rejectWithValue }) => {
         try {
+            // 1. Prepare the request configuration with content-type
             const config = {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json" // Tell the server to expect JSON
                 },
             };
+            // 2. Send a POST request to the backend with user data
             const { data } = await axios.post(
-                `${backendURL}/user/signup`,
-                { firstName, lastName, email, password },
-                config
+                `${backendURL}/user/signup`, // API endpoint
+                { firstName, lastName, email, password }, // Data to be sent in the body of the request
+                config // Headers for the request
             );
+            // 3. Return the response data if the request is successful
             return data;
         } catch (error) {
             return rejectWithValue(error.response?.data?.message || error.message);

@@ -1,38 +1,42 @@
+$primary-color: #00bc77;
 
-  .account {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid black;
-    background-color: #fff;
-    width: 80%;
-    margin: 0 auto;
-    flex-direction: column;
-    padding: 1.5rem;
-    box-sizing: border-box;
-    text-align: left;
-    margin-bottom: 2rem;
+.account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto;
+  flex-direction: column;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  text-align: left;
+  margin-bottom: 2rem;
+
+  &-content-wrapper {
+    width: 100%;
+
+    &.cta {
+      flex: 1;
+    }
   }
 
-  .account-amount {
-    margin: 0;
-    font-size: 2.5rem;
-    font-weight: bold;
-  }
-
-  .account-amount-description {
-    margin: 0;
-  }
-
-  .account-title {
+  &-title {
     margin: 0;
     padding: 0;
     font-size: 1rem;
     font-weight: normal;
   }
 
-  .account-content-wrapper {
-    width: 100%;
+  &-amount {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: bold;
+
+    &-description {
+      margin: 0;
+    }
   }
 
   .transaction-button {
@@ -42,21 +46,22 @@
     font-size: 1.1rem;
     font-weight: bold;
     margin-top: 1rem;
-    border-color: #00bc77;
-    background-color: #00bc77;
+    border: none;
+    border-color: $primary-color;
+    background-color: $primary-color;
     color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
   }
 
   @media (min-width: 720px) {
-    .account {
-      flex-direction: row;
-    }
-
-    .account-content-wrapper.cta {
-      flex: 1;
-    }
+    flex-direction: row;
 
     .transaction-button {
       width: 200px;
     }
   }
+}

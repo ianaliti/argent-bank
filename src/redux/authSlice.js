@@ -34,6 +34,10 @@ const authSlice = createSlice({
       .addCase(fetchUserProfile.fulfilled, (state, { payload }) => {
         state.userInfo = payload;
       })
+      .addCase(fetchUserProfile.rejected, (state, { payload }) => {
+        state.error = payload || "Failed to fetch profile!";
+      })
+
       .addCase(userLogin.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -58,7 +62,7 @@ const authSlice = createSlice({
         state.userToken = payload.body.token;
 
         if (state.userToken) {
-          localStorage.setItem('userToken', payload.body.token); // ✅ Fix: use payload.body.token
+          localStorage.setItem('userToken', payload.body.token); 
         }
       })
       .addCase(registerUser.rejected, (state, { payload }) => {
@@ -66,9 +70,17 @@ const authSlice = createSlice({
         state.error = payload;
       })
 
+      .addCase(updateUserProfile.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(updateUserProfile.fulfilled, (state, { payload }) => {
+        state.loading = false;
         state.userInfo = payload;
         state.success = true;
+      })
+      .addCase(updateUserProfile.rejected, (state, { payload }) => {
+        state.loading = false;
+        state.error = payload || "Update failed!";
       });
   }
 })

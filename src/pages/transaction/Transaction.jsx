@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import './Transaction.css';
 
 export default function Transaction() {
-    const location = useLocation();
+    const location = useLocation(); //allows a component to access the current URL location and any state that was passed through navigation.
     const { accountType, accountNumber, balance } = location.state || {};
 
     const [transactions, setTransactions] = useState([
@@ -58,7 +58,7 @@ export default function Transaction() {
             <table className="transaction-table">
                 <thead>
                     <tr>
-                        <th></th> {/* Empty header for icon */}
+                        <th></th> 
                         <th>Date</th>
                         <th>Description</th>
                         <th>Amount</th>

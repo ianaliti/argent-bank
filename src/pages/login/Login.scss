@@ -1,34 +1,24 @@
-
-.sign-in-button {
-  display: block;
-  width: 100%;
-  padding: 8px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-top: 1rem;
-  border-color: #00bc77;
-  background-color: #00bc77;
-  color: #fff;
-}
-
 .sign-in-content {
   box-sizing: border-box;
   background-color: white;
   width: 300px;
   margin: 0 auto;
   padding: 4rem;
-}
 
-.sign-in-icon {
-  font-size: 5rem;
-}
+  .sign-in-icon {
+    font-size: 5rem;
+  }
+  
+  .input-remember {
+    display: flex;
+  }
 
-.input-remember {
-  display: flex;
-}
-
-.input-remember label {
-  margin-left: 0.25rem;
+  .input-remember label {
+    margin-left: 0.25rem;
+  }
+  .create-account {
+    text-decoration: underline;
+  }
 }
 
 .input-wrapper {
@@ -47,9 +37,18 @@
   font-size: 1.2rem;
 }
 
-.create-account {
-  text-decoration: underline;
+.sign-in-button {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1rem;
+  border-color: #00bc77;
+  background-color: #00bc77;
+  color: #fff;
 }
+
 
 // Modal styles
 .modal-overlay {
@@ -62,24 +61,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
 
-.modal {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  width: 350px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-}
+  .modal {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 350px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  }
 
-.close-modal {
-  margin-top: 1rem;
-  background: red;
-  color: white;
-  border: none;
-  padding: 0.5rem;
-  cursor: pointer;
-  width: 100%;
+  .close-modal {
+    margin-top: 1rem;
+    background: red;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    width: 100%;
+  }
+  
 }
 
 .error {

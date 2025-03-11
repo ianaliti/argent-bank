@@ -5,14 +5,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import { setTokenFromLocalStorage } from '../../redux/authSlice'
 import { fetchUserProfile } from '../../redux/authAction'
 import Account from '../../components/accounts/Account'
-import UpdateProfile from '../update_profile/UpdateProfile'
+import UpdateProfile from '../../components/update_profile/UpdateProfile'
 
 
 export default function Profile() {
-
+  const { loading, userInfo, userToken } = useSelector((state) => state.user) // access the Redux store's state
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { loading, userInfo, userToken } = useSelector((state) => state.user)
 
   useEffect(() => {
     if (!userToken) {
@@ -21,12 +20,15 @@ export default function Profile() {
       if (token) {
         dispatch(setTokenFromLocalStorage(token));
       }
+
     } if (!userToken) {
       navigate('/user/login');
     } else {
       dispatch(fetchUserProfile())
     }
   }, [userToken, dispatch, navigate])
+
+  console.log(userInfo)
 
   return (
     <main className="main bg-dark profile">

@@ -9,17 +9,19 @@ import './Login.css'
 
 
 export default function Login() {
-  const { loading, error, userToken, success } = useSelector((state) => state.user)
-  const dispatch = useDispatch()
+  const { loading, error, userToken } = useSelector((state) => state.user) // access state from the Redux store
+  const dispatch = useDispatch() // send actions to the Redux store
   const navigate = useNavigate()
+
   const { register, handleSubmit, formState: { errors } } = useForm()
   const { register: registerRegister, handleSubmit: handleSubmitRegister, formState: { errors: errorsRegister }, reset } = useForm();
   const [showRegister, setShowRegister] = useState(false);
   const [registrationError, setRegistrationError] = useState(null);
 
+
   useEffect(() => {
     if (userToken) {
-      navigate("/user/profile")
+      navigate("/user/profile");
     }
   }, [userToken, navigate]);
 
@@ -28,14 +30,13 @@ export default function Login() {
       const result = await dispatch(userLogin({
         email: data.email,
         password: data.password
-      })).unwrap();
+      })).unwrap(); // extracts the response from the Redux action
 
       if (result && result.body && result.body.token) {
-        navigate('/user/profile')
+        navigate('/user/profile');
       }
-
     } catch (err) {
-      console.error('Login failed:', err)
+      console.error('Login failed:', err);
     }
   };
 
@@ -49,16 +50,19 @@ export default function Login() {
         email: data.email,
         password: data.password
       })).unwrap();
-
+      
       if (result && result.body && result.body.token) {
+        navigate('/user/profile');
         reset();
         setShowRegister(false);
       }
+      // Fallback: If we need to login separately
       else if (result.body) {
         const loginResult = await dispatch(userLogin({
           email: data.email,
           password: data.password
         })).unwrap();
+        
         if (loginResult && loginResult.body && loginResult.body.token) {
           reset();
           setShowRegister(false);
@@ -66,10 +70,11 @@ export default function Login() {
         }
       }
     } catch (err) {
-      console.error('Login failed:', err);
       setRegistrationError(err.toString());
     }
   };
+
+  console.log(userToken)
 
   return (
     <div className='main bg-dark'>
@@ -83,12 +88,12 @@ export default function Login() {
             <input
               type="email"
               id="email"
-              placeholder="Enter your username"
+              placeholder="Enter your email address"
               {...register('email')}
               required
             />
-            {errors.username && (
-              <span className='error'>{error.username.message}</span>
+            {errors.email && (
+              <span className='error'>{errors.email.message}</span>
             )}
           </div>
           <div className="input-wrapper">
@@ -101,7 +106,7 @@ export default function Login() {
               required
             />
             {errors.password && (
-              <span className='error'>{error.password.message}</span>
+              <span className='error'>{errors.password.message}</span>
             )}
           </div>
           <div className="input-remember">
@@ -123,6 +128,7 @@ export default function Login() {
         <div className="modal-overlay">
           <div className="modal">
             <h2>Create an Account</h2>
+            {registrationError && <div className='error-message'>{registrationError}</div>}
             <form onSubmit={handleSubmitRegister(onSubmitRegister)}>
               <div className="input-wrapper">
                 <label htmlFor="first-name">First Name</label>

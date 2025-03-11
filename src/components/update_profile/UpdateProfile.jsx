@@ -7,8 +7,8 @@ import './UpdateProfile.css'
 
 export default function UpdateProfile() {
 
-    const { userInfo, loading } = useSelector((state) => state.user)
-    const { register, handleSubmit, setValue } = useForm()
+    const { userInfo, loading } = useSelector((state) => state.user);
+    const { register, handleSubmit, setValue } = useForm();
 
     const dispatch = useDispatch()
 
@@ -38,9 +38,9 @@ export default function UpdateProfile() {
     }
 
     const handleCancel = () => {
-        reset();
+        setValue("firstName", userInfo?.body?.firstName || "");
+        setValue("lastName", userInfo?.body?.lastName || "");
     };
-
 
     return (
         <form className='form-update' onSubmit={handleSubmit(submitForm)}>
